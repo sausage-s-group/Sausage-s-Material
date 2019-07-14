@@ -1,0 +1,16 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "sausages_material:item",
+    "transform": "forge:default-item",
+    "textures": {
+      "layer0": "sausages_material:items/metal_nugget"
+    }
+  },
+  "variants": {
+    "inventory": [
+      {
+      }
+    ]
+  }
+}
