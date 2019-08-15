@@ -44,7 +44,7 @@ public class ItemMaterial extends Item {
 
     public static IMaterial getMaterial(int itemDamage) {
 	    assert itemDamage>0;
-        if(itemDamage>MetalMaterials.values().length){
+        if(itemDamage>=MetalMaterials.values().length){
             return AlloyMaterials.values()[itemDamage-14];
         }
         return MetalMaterials.values()[itemDamage];
