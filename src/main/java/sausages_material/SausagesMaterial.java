@@ -1,22 +1,27 @@
 package sausages_material;
 
-import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.Logger;
 import sausage_core.api.registry.AutoSyncConfig;
-import sausage_core.api.util.common.SausageUtils;
+import sausage_core.api.util.client.IBlockCM;
+import sausage_core.api.util.client.IItemCM;
 import sausage_core.api.util.oredict.OreDicts;
-import sausages_material.api.*;
+import sausage_core.api.util.registry.IBRegistryManager;
+import sausages_material.api.MetalShapes;
+import sausages_material.block.BlockMaterial;
+import sausages_material.item.ItemMaterial;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Yaossg
@@ -32,7 +37,12 @@ public class SausagesMaterial {
 	public static final String NAME = "Sausage's Material";
 	public static final String VERSION = "@version@";
 	public static Logger logger;
-
+	private static final IBRegistryManager manager = new IBRegistryManager(MODID, new CreativeTabs("Sausage's Material") {
+        @Override
+        public ItemStack createIcon() {
+            return null;
+        }
+    });
 	/**
 	 * Fix problem of different ore names for Al
 	 */
@@ -60,42 +70,42 @@ public class SausagesMaterial {
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
+		IItemCM colorer = IItemCM.mappingBy(stack -> ItemMaterial.getMaterial(stack.getItemDamage()).color());
+		IBlockCM blockCM = (state, worldIn, pos, tintIndex) -> tintIndex==0?0:ItemMaterial.getMaterial(state.getValue(BlockMaterial.TYPE)).color();
 		logger = event.getModLog();
-		SausageUtils.loadingInformation(NAME, VERSION, MODID);
 		MinecraftForge.EVENT_BUS.register(AutoSyncConfig.class);
 		AutoSyncConfig.AUTO_SYNC_CONFIG.register(MODID);
 
-		for(IMaterial material : MetalMaterials.values()) {
-			MaterialRegistry.INSTANCE.add(material);
-			for(MetalShapes shapes : MetalShapes.values()) {
-				material.addItem(shapes);
-			}
-
+		for(MetalShapes metalShape:MetalShapes.values()){
+			if(metalShape==MetalShapes.block||metalShape==MetalShapes.ore)continue;
+			ItemMaterial item = new ItemMaterial(metalShape);
+			manager.addItem(metalShape.name(), item);
+			manager.addItemCM(item, colorer);
 		}
+		BlockMaterial block = new BlockMaterial(MetalShapes.block);
+		manager.addBlock(MetalShapes.block.name(),block);
+		manager.addBlockCM(block, blockCM);
 
-		for(IMaterial material : AlloyMaterials.values()) {
-			MaterialRegistry.INSTANCE.add(material);
-			for(MetalShapes shapes : MetalShapes.values()) {
-				material.addItem(shapes);
-			}
-
-		}
-
-
-
-		MaterialRegistry.INSTANCE.register();
+		block = new BlockMaterial(MetalShapes.ore);
+		manager.addBlock(MetalShapes.ore.name(),block);
+		manager.addBlockCM(block,blockCM);
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		if(event.getSide().isClient()) MaterialRegistry.INSTANCE.color();
 
 	}
 
+	@EventHandler
+	public void postInit(FMLPostInitializationEvent event){
 
-	@SubscribeEvent
-	public static void loadModels(ModelRegistryEvent event) {
-		MaterialRegistry.INSTANCE.loadModel();
 	}
+
+	@EventHandler
+	public void onIMCMessageDistributed(FMLInterModComms.IMCEvent event){
+		List<FMLInterModComms.IMCMessage> messages = event.getMessages();
+		//TODO communicate with other mods.
+	}
+
 
 }

@@ -1,1 +1,33 @@
-﻿
+﻿sausages_material.shape.gear=%s Gear
+sausages_material.shape.ingot=%s Ingot
+sausages_material.shape.block=%s Block
+sausages_material.shape.dust=%s Dust
+sausages_material.shape.dustTiny=%s Tiny Dust
+sausages_material.shape.plate=%s Plate
+sausages_material.shape.plateDense=%s Dense Plate
+sausages_material.shape.stick=%s Stick
+sausages_material.shape.nugget=%s Nugget
+sausages_material.shape.wire=%s Wire
+sausages_material.shape.ore=%s Ore
+
+sausages_material.metal.iron=Iron
+sausages_material.metal.copper=Copper
+sausages_material.metal.tin=Tin
+sausages_material.metal.aluminium=Aluminium
+sausages_material.metal.chromium=Chromium
+sausages_material.metal.tungsten=Tungsten
+sausages_material.metal.nickel=Nickel
+sausages_material.metal.lead=Lead
+sausages_material.metal.gold=Gold
+sausages_material.metal.silver=Silver
+sausages_material.metal.platinum=Platinum
+sausages_material.metal.iridium=Iridium
+sausages_material.metal.steel=Steel
+sausages_material.metal.hardened=Tungsten Steel
+sausages_material.alloy.bronze=Bronze
+sausages_material.alloy.constantan=Constantan
+sausages_material.alloy.invar=Invar
+sausages_material.alloy.electrum=Electrum
+sausages_material.alloy.stainless=Stainless Steel
+sausages_material.alloy.platiridinum=Platinum-Iridium
+

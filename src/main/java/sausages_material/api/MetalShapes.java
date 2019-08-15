@@ -4,7 +4,7 @@ import net.minecraft.util.ResourceLocation;
 import sausages_material.SausagesMaterial;
 
 public enum MetalShapes implements IShape {
-	//ore(288), block(1296),
+	ore(144), block(1296),
 	ingot(144), nugget(16),
 	dust(144), gear(576), plate(144), stick(72),
 	wire(72), dustTiny(16), plateDense(1296);

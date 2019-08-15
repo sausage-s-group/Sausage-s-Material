@@ -1,0 +1,15 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "sausages_material:block/overlay_block",
+    "textures": {
+      "overlay": "sausages_material:blocks/ore_overlay"
+    }
+  },
+  "variants": {
+    "normal": [
+      {
+      }
+    ]
+  }
+}

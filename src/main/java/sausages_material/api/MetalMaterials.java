@@ -1,5 +1,6 @@
 package sausages_material.api;
 
+import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import sausage_core.api.util.client.Colors;
@@ -29,7 +30,12 @@ public enum MetalMaterials implements IMaterial {
 	steel(Colors.GRAY),
 	hardened(Colors.DARK_GREEN)
 	;
+
+
 	public final int color;
+	private final Map<IShape,Supplier<Item>> items = Maps.newHashMap();
+	private final Map<IShape,Supplier<Block>> blocks = Maps.newHashMap();
+
 
 	MetalMaterials(int color) {
 		this.color = color;
@@ -38,6 +44,16 @@ public enum MetalMaterials implements IMaterial {
 	@Override
 	public int color() {
 		return color;
+	}
+
+	@Override
+	public Map<IShape, Supplier<Item>> items() {
+		return items;
+	}
+
+	@Override
+	public Map<IShape, Supplier<Block>> blocks() {
+		return blocks;
 	}
 }
 

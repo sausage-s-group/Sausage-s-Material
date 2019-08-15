@@ -1,1 +1,33 @@
-﻿
+﻿sausages_material.shape.gear=%s 齿轮
+sausages_material.shape.ingot=%s 锭
+sausages_material.shape.block=%s 块
+sausages_material.shape.dust=%s 粉
+sausages_material.shape.dustTiny=小搓 %s 粉
+sausages_material.shape.plate=%s 板
+sausages_material.shape.plateDense=致密 %s 板
+sausages_material.shape.stick=%s 棍
+sausages_material.shape.nugget=%s 粒
+sausages_material.shape.wire=%s 线
+sausages_material.shape.ore=%s 矿
+
+sausages_material.metal.iron=铁
+sausages_material.metal.copper=铜
+sausages_material.metal.tin=锡
+sausages_material.metal.aluminium=铝
+sausages_material.metal.chromium=铬
+sausages_material.metal.tungsten=钨
+sausages_material.metal.nickel=镍
+sausages_material.metal.lead=铅
+sausages_material.metal.gold=金
+sausages_material.metal.silver=银
+sausages_material.metal.platinum=铂
+sausages_material.metal.iridium=铱
+sausages_material.metal.steel=钢
+sausages_material.metal.hardened=钨钢
+sausages_material.alloy.bronze=青铜
+sausages_material.alloy.constantan=康铜
+sausages_material.alloy.invar=殷钢
+sausages_material.alloy.electrum=琥珀金
+sausages_material.alloy.stainless=不锈钢
+sausages_material.alloy.platiridinum=铂铱合金
+

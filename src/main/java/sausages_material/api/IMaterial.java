@@ -11,12 +11,8 @@ public interface IMaterial {
 	String name();
 	int color();
 
-	default Map<IShape, Supplier<Item>> items() {
-		return MaterialRegistry.INSTANCE.sItem.computeIfAbsent(this, $ -> new HashMap<>());
-	}
-	default Map<IShape, Supplier<Block>> blocks() {
-		return MaterialRegistry.INSTANCE.sBlock.computeIfAbsent(this, $ -> new HashMap<>());
-	}
+	Map<IShape, Supplier<Item>> items();
+	Map<IShape, Supplier<Block>> blocks();
 
 	default IMaterial addItem(IShape shape) {
 		return addItem(shape, Item::new);
