@@ -56,9 +56,3 @@ public enum MetalMaterials implements IMaterial {
 		return blocks;
 	}
 }
-
-/*
-征集：20种金属的颜色，他们是
-纯金属：Al Cr Fe Ni Cu Ag Sn W Ir Pt Au Pb
-合金：Cu-Sn Cu-Ni Fe-C W-C Fe-Cr Fe-Ni Au-Ag Pt-Ir
-*/
