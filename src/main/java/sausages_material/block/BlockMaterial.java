@@ -23,7 +23,7 @@ public class BlockMaterial<T extends Enum<T>& IMaterial& IStringSerializable> ex
     private final Class<T> clz;
     private final PropertyEnum<T> MATERIAL;
 
-    public BlockMaterial(Class<T> clz,PropertyEnum<T> material) {
+    public BlockMaterial(Class<T> clz,MetalShapes shape,PropertyEnum<T> material) {
         super(Material.IRON,MapColor.IRON);
         this.clz = clz;
         this.MATERIAL = material;
@@ -45,6 +45,6 @@ public class BlockMaterial<T extends Enum<T>& IMaterial& IStringSerializable> ex
 
     @Override
     public IBlockState getStateFromMeta(int meta){
-        return  getDefaultState().withProperty(MATERIAL,clz.getEnumConstants()[meta]);
+        return super.getStateFromMeta(meta).withProperty(MATERIAL,clz.getEnumConstants()[meta]);
     }
 }
