@@ -1,4 +1,4 @@
-package sausages_material.api;
+package sausages_material.material;
 
 import net.minecraft.util.ResourceLocation;
 

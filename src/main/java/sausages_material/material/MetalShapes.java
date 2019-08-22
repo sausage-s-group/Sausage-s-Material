@@ -1,4 +1,4 @@
-package sausages_material.api;
+package sausages_material.material;
 
 import net.minecraft.util.ResourceLocation;
 import sausages_material.SausagesMaterial;
@@ -17,7 +17,7 @@ public enum MetalShapes implements IShape {
 
 	@Override
 	public ResourceLocation location() {
-		return new ResourceLocation(SausagesMaterial.MODID, "metal_" + name());
+        return new ResourceLocation(SausagesMaterial.MODID, name());
 	}
 
 	@Override

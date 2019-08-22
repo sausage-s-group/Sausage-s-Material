@@ -2,36 +2,35 @@ package sausages_material.block;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
-import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import sausages_material.api.IMaterial;
-import sausages_material.api.MetalShapes;
+import sausages_material.material.IMaterial;
+import sausages_material.material.MetalMaterials;
 
 @MethodsReturnNonnullByDefault
-public class BlockMaterial<T extends Enum<T>& IMaterial& IStringSerializable> extends Block
-{
-    public static final PropertyInteger TYPE = PropertyInteger.create("material",0,19);
-    private final Class<T> clz;
-    private final PropertyEnum<T> MATERIAL;
+@SuppressWarnings({"deprecation"})
+public class BlockMetal extends Block {
+    public static final PropertyEnum<MetalMaterials> MATERIAL = PropertyEnum.create("MATERIAL", MetalMaterials.class);
 
-    public BlockMaterial(Class<T> clz,MetalShapes shape,PropertyEnum<T> material) {
-        super(Material.IRON,MapColor.IRON);
-        this.clz = clz;
-        this.MATERIAL = material;
+    public BlockMetal() {
+        super(Material.IRON, MapColor.getBlockColor(EnumDyeColor.LIME));
+        this.setHardness(2.5F);
+        this.setSoundType(SoundType.METAL);
+        setDefaultState(getDefaultState().withProperty(MATERIAL, MATERIAL.getValueClass().getEnumConstants()[0]));
     }
 
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack){
-        state.withProperty(TYPE,stack.getItemDamage());
+        state.withProperty(MATERIAL, IMaterial.getMaterial(stack.getItemDamage()));
     }
     @Override
     public BlockStateContainer createBlockState() {
@@ -45,6 +44,6 @@ public class BlockMaterial<T extends Enum<T>& IMaterial& IStringSerializable> ex
 
     @Override
     public IBlockState getStateFromMeta(int meta){
-        return super.getStateFromMeta(meta).withProperty(MATERIAL,clz.getEnumConstants()[meta]);
+        return super.getStateFromMeta(meta).withProperty(MATERIAL, MATERIAL.getValueClass().getEnumConstants()[meta]);
     }
 }

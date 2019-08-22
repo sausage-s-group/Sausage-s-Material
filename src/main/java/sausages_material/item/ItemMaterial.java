@@ -8,13 +8,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import sausages_material.SausagesMaterial;
-import sausages_material.api.AlloyMaterials;
-import sausages_material.api.IMaterial;
-import sausages_material.api.IShape;
-import sausages_material.api.MetalMaterials;
+import sausages_material.material.AlloyMaterials;
+import sausages_material.material.IMaterial;
+import sausages_material.material.IShape;
+import sausages_material.material.MetalMaterials;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+
+import static sausage_core.api.util.common.SausageUtils.nonnull;
 
 @MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class ItemMaterial extends Item {
 	public ItemMaterial(IShape shape){
 	    setNoRepair();
@@ -37,16 +41,10 @@ public class ItemMaterial extends Item {
 
     @Override
     public String getItemStackDisplayName(ItemStack s){
-	    return I18n.format("sausages_material.shape."+getRegistryName().getPath(),
-                I18n.format( ItemMaterial.getMaterial(s.getItemDamage()).name() )
+        return I18n.format("sausages_material.shape." + nonnull(getRegistryName()).getPath(),
+                I18n.format("sausages_material." + (s.getItemDamage() >= 14 ? "alloy" : "metal") + IMaterial.getMaterial(s.getItemDamage()).name())
         );
     }
 
-    public static IMaterial getMaterial(int itemDamage) {
-	    assert itemDamage>0;
-        if(itemDamage>=MetalMaterials.values().length){
-            return AlloyMaterials.values()[itemDamage-14];
-        }
-        return MetalMaterials.values()[itemDamage];
-    }
+
 }

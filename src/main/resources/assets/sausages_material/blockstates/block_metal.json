@@ -1,0 +1,15 @@
+{
+  "forge-marker": 1,
+  "defaults": {
+    "model": "minecraft:blocks/cube_all",
+    "textures": {
+      "all": "sausgaes_material:blocks/metal_block"
+    }
+  },
+  "variants": {
+    "normal": [
+      {
+      }
+    ]
+  }
+}

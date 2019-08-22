@@ -1,4 +1,4 @@
-package sausages_material.api;
+package sausages_material.material;
 
 import java.util.List;
 
@@ -6,6 +6,7 @@ import java.util.List;
  * The steel which includes iron and carbon does not belongs to this!
  * */
 public interface IMetalAlloy extends IMaterial {
+	@SuppressWarnings("WeakerAccess")
 	class WeightedMetal {
 		public final IMaterial metal;
 		public final int weight;
