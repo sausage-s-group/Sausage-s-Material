@@ -20,7 +20,7 @@ import sausages_material.material.MetalMaterials;
 @SuppressWarnings("deprecation")
 public class OreMetal extends BlockOre {
 
-    public static final PropertyEnum<MetalMaterials> MATERIAL = PropertyEnum.create("METAL", MetalMaterials.class);
+    public static final PropertyEnum<MetalMaterials> MATERIAL = PropertyEnum.create("metal", MetalMaterials.class);
 
     public OreMetal() {
         super(MapColor.IRON);
@@ -30,7 +30,7 @@ public class OreMetal extends BlockOre {
 
     @Override
     public void getSubBlocks(CreativeTabs tabs, NonNullList<ItemStack> list) {
-        for (int i = 1; i <= MetalMaterials.values().length; i++) {
+        for (int i = 1; i < MetalMaterials.values().length; i++) {
             list.add(new ItemStack(this, 1, i));
         }
     }

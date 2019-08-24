@@ -20,7 +20,7 @@ import sausages_material.material.IMaterial;
 @MethodsReturnNonnullByDefault
 @SuppressWarnings("deprecation")
 public class BlockAlloy extends Block {
-    public static final PropertyEnum<AlloyMaterials> MATERIAL = PropertyEnum.create("ALLOY", AlloyMaterials.class);
+    public static final PropertyEnum<AlloyMaterials> MATERIAL = PropertyEnum.create("alloy", AlloyMaterials.class);
 
     public BlockAlloy() {
         super(Material.IRON, MapColor.MAGENTA_STAINED_HARDENED_CLAY);

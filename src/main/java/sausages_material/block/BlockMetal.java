@@ -19,7 +19,7 @@ import sausages_material.material.MetalMaterials;
 @MethodsReturnNonnullByDefault
 @SuppressWarnings({"deprecation"})
 public class BlockMetal extends Block {
-    public static final PropertyEnum<MetalMaterials> MATERIAL = PropertyEnum.create("MATERIAL", MetalMaterials.class);
+    public static final PropertyEnum<MetalMaterials> MATERIAL = PropertyEnum.create("metal", MetalMaterials.class);
 
     public BlockMetal() {
         super(Material.IRON, MapColor.getBlockColor(EnumDyeColor.LIME));
