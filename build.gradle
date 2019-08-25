@@ -17,7 +17,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 
 version = "0.1.0"
 group = "sausages_material" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "Sausage's Material"
+archivesBaseName = "SausagesMaterial"
 
 sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 compileJava {
@@ -69,6 +69,26 @@ task apiJar(type: Jar) {
     include 'sausages_material/api/**'
 }
 
+task modJar(type: Jar) {
+    classifier = 'universal'
+    from sourceSets.main.output
+}
+
+task devJar(type: Jar){
+    classifier = 'dev'
+    from sourceSets.main.output
+    from sourceSets.main.allSource
+    include '**'
+}
+
+task srcJar(type: Jar){
+    classifier = 'src'
+    from sourceSets.main.allSource
+    include '**'
+}
 artifacts {
     archives apiJar
+    archives modJar
+    archives devJar
+    archives srcJar
 }
