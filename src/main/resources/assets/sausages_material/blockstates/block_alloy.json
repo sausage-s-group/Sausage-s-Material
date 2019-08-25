@@ -1,28 +1,19 @@
 {
-  "variants": {
-    "bronze": {
-      "model": "sausages_material:block/metal_block"
-    },
-    "constantan": {
-      "model": "sausages_material:block/metal_block"
-    },
-    "invar": {
-      "model": "sausages_material:block/metal_block"
-    },
-    "electrum": {
-      "model": "sausages_material:block/metal_block"
-    },
-    "stainless": {
-      "model": "sausages_material:block/metal_block"
-    },
-    "platiridinum": {
-      "model": "sausages_material:block/metal_block"
-    },
-    "steel": {
-      "model": "sausages_material:block/metal_block"
-    },
-    "hardened": {
-      "model": "sausages_material:block/metal_block"
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraft:cube_all",
+    "textures": {
+      "all": "sausages_material:blocks/metal_block"
     }
+  },
+  "variants": {
+    "bronze": {},
+    "constantan": {},
+    "invar": {},
+    "electrum": {},
+    "stainless": {},
+    "platiridinum": {},
+    "steel": {},
+    "hardened": {}
   }
 }

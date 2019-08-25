@@ -1,42 +1,25 @@
 {
+  "forge_marker": 1,
+  "defaults": {
+    "model": "sausages_material:overlay_block",
+    "textures": {
+      "overlay": "sausages_material:blocks/ore_overlay"
+    }
+  },
   "variants": {
     "metal": {
-      "iron": {
-        "model": "sausages_material:block/ore"
-      },
-      "copper": {
-        "model": "sausages_material:block/ore"
-      },
-      "tin": {
-        "model": "sausages_material:block/ore"
-      },
-      "aluminium": {
-        "model": "sausages_material:block/ore"
-      },
-      "chromium": {
-        "model": "sausages_material:block/ore"
-      },
-      "tungsten": {
-        "model": "sausages_material:block/ore"
-      },
-      "nickel": {
-        "model": "sausages_material:block/ore"
-      },
-      "lead": {
-        "model": "sausages_material:block/ore"
-      },
-      "gold": {
-        "model": "sausages_material:block/ore"
-      },
-      "silver": {
-        "model": "sausages_material:block/ore"
-      },
-      "platinum": {
-        "model": "sausages_material:block/ore"
-      },
-      "iridium": {
-        "model": "sausages_material:block/ore"
-      }
+      "iron": {},
+      "copper": {},
+      "tin": {},
+      "aluminium": {},
+      "chromium": {},
+      "tungsten": {},
+      "nickel": {},
+      "lead": {},
+      "gold": {},
+      "silver": {},
+      "platinum": {},
+      "iridium": {}
     }
   }
 }

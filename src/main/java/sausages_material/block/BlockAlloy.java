@@ -16,11 +16,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import sausages_material.material.AlloyMaterials;
 import sausages_material.material.IMaterial;
+import sausages_material.material.MetalMaterials;
 
 @MethodsReturnNonnullByDefault
 @SuppressWarnings("deprecation")
 public class BlockAlloy extends Block {
-    public static final PropertyEnum<AlloyMaterials> MATERIAL = PropertyEnum.create("alloy", AlloyMaterials.class);
+    public static final PropertyEnum<AlloyMaterials> MATERIAL = PropertyEnum.create("material", AlloyMaterials.class);
 
     public BlockAlloy() {
         super(Material.IRON, MapColor.MAGENTA_STAINED_HARDENED_CLAY);
@@ -31,8 +32,8 @@ public class BlockAlloy extends Block {
 
     @Override
     public void getSubBlocks(CreativeTabs tabs, NonNullList<ItemStack> list) {
-        for (int i = 1; i <= AlloyMaterials.values().length; i++) {
-            list.add(new ItemStack(this, 1, i));
+        for (int i = 0; i < AlloyMaterials.values().length; i++) {
+            list.add(new ItemStack(this, 1, i + MetalMaterials.values().length));
         }
     }
 

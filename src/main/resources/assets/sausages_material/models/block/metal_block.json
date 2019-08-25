@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:blocks/cube_all",
-  "textures": {
-    "all": "sausages_material:blocks/metal_block"
-  }
-}

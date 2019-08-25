@@ -30,7 +30,7 @@ public class OreMetal extends BlockOre {
 
     @Override
     public void getSubBlocks(CreativeTabs tabs, NonNullList<ItemStack> list) {
-        for (int i = 1; i < MetalMaterials.values().length; i++) {
+        for (int i = 0; i < MetalMaterials.values().length; i++) {
             list.add(new ItemStack(this, 1, i));
         }
     }

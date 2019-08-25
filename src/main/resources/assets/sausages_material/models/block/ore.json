@@ -1,6 +1,0 @@
-{
-  "parent": "sausages_material:block/overlay_block",
-  "textures": {
-    "overlay": "sausages_material:blocks/ore_overlay"
-  }
-}

@@ -1,42 +1,25 @@
 {
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraft:cube_all",
+    "textures": {
+      "all": "sausages_material:blocks/metal_block"
+    }
+  },
   "variants": {
     "metal": {
-      "iron": {
-        "model": "sausages_material:block/metal_block"
-      },
-      "copper": {
-        "model": "sausages_material:block/metal_block"
-      },
-      "tin": {
-        "model": "sausages_material:block/metal_block"
-      },
-      "aluminium": {
-        "model": "sausages_material:block/metal_block"
-      },
-      "chromium": {
-        "model": "sausages_material:block/metal_block"
-      },
-      "tungsten": {
-        "model": "sausages_material:block/metal_block"
-      },
-      "nickel": {
-        "model": "sausages_material:block/metal_block"
-      },
-      "lead": {
-        "model": "sausages_material:block/metal_block"
-      },
-      "gold": {
-        "model": "sausages_material:block/metal_block"
-      },
-      "silver": {
-        "model": "sausages_material:block/metal_block"
-      },
-      "platinum": {
-        "model": "sausages_material:block/metal_block"
-      },
-      "iridium": {
-        "model": "sausages_material:block/metal_block"
-      }
+      "iron": {},
+      "copper": {},
+      "tin": {},
+      "aluminium": {},
+      "chromium": {},
+      "tungsten": {},
+      "nickel": {},
+      "lead": {},
+      "gold": {},
+      "silver": {},
+      "platinum": {},
+      "iridium": {}
     }
   }
 }
