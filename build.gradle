@@ -40,7 +40,7 @@ minecraft {
 }
 
 dependencies {
-
+    compile fileTree("libs")
 }
 
 processResources {

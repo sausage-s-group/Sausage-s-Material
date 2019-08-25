@@ -1,5 +1,4 @@
 {
-  "forge-marker": 1,
   "variants": {
     "bronze": {
       "model": "sausages_material:block/metal_block"

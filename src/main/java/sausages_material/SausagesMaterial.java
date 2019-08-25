@@ -57,7 +57,7 @@ public enum SausagesMaterial {
 	public static final String NAME = "Sausage's Material";
 	public static final String VERSION = "@version@";
 	public static Logger logger;
-	private static final IBRegistryManager manager = new IBRegistryManager(MODID, new CreativeTabs("sausages_material") {
+    private static final IBRegistryManager manager = new IBRegistryManager(MODID, new CreativeTabs(MODID) {
 		@Override
 		public ItemStack createIcon() {
 			try {

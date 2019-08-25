@@ -1,4 +1,6 @@
-﻿sausages_material.shape.gear=%s Gear
+﻿itemGroup.sausages_material=Sausage's Material
+
+sausages_material.shape.gear=%s Gear
 sausages_material.shape.ingot=%s Ingot
 sausages_material.shape.block=%s Block
 sausages_material.shape.dust=%s Dust
