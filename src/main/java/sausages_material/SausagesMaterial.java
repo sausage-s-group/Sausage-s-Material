@@ -5,15 +5,12 @@ import com.google.common.collect.Sets;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemMultiTexture;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -26,7 +23,6 @@ import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.Logger;
 import sausage_core.api.annotation.AutoCall;
@@ -43,23 +39,25 @@ import sausages_material.event.worldgen.ore.OreGenerator;
 import sausages_material.item.ItemMaterial;
 import sausages_material.material.AlloyMaterials;
 import sausages_material.material.IMaterial;
-import sausages_material.material.MetalMaterials;
 import sausages_material.material.MetalShapes;
-import scala.tools.nsc.Global;
 
-import java.util.*;
-import java.util.function.Function;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static sausage_core.api.util.common.SausageUtils.nonnull;
 
 /**
  * @author Yaossg
  */
-@Mod(modid = SausagesMaterial.MODID,
+@Mod(
+        modid = SausagesMaterial.MODID,
 		name = SausagesMaterial.NAME,
 		version = SausagesMaterial.VERSION,
 		acceptedMinecraftVersions = "1.12.2",
-		dependencies = "required-after:sausage_core@[1.6,)")
+        dependencies = "required-after:sausage_core@[1.6,)",
+        guiFactory = "sausages_material.gui.GuiFactory"
+)
 @Mod.EventBusSubscriber
 @MethodsReturnNonnullByDefault
 @SuppressWarnings("unused")
@@ -135,7 +133,7 @@ public enum SausagesMaterial {
 		    return model;
         });
 		BlockAlloy block = new BlockAlloy();
-		manager.addBlock("block_alloy", block, ml);
+        manager.addBlock("block_alloy", block, $ -> new ItemMultiTexture($, $, AlloyMaterials.names()), ml);
 		manager.addBlockCM(block, this::colorMultiplier);
 
 		BlockMetal block2 = new BlockMetal();
@@ -154,7 +152,7 @@ public enum SausagesMaterial {
 		} else if (block instanceof BlockMetal) {
 			return state.getValue(BlockMetal.MATERIAL).color();
 		} else if (block instanceof OreMetal) {
-			return state.getValue(OreMetal.MATERIAL).color();
+            if (tintIndex == 1) return state.getValue(OreMetal.MATERIAL).color();
 		}
 		return 0;
 	}
