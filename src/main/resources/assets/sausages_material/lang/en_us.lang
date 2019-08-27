@@ -1,5 +1,11 @@
 ﻿itemGroup.sausages_material=Sausage's Material
+# -------------------
+cfg.sausages_material.general=Sausage's Material Generic Config
+cfg.sausages_material.general.singleton_ore_gen=Singleton Ore Generator
 
+cfg.sausages_material.customization=Sausages's Material Customization Config
+cfg.sausages_material.customization.use_overridable_ore_gen=Use Overridable Ore Gen
+# -------------------
 sausages_material.shape.gear=%s Gear
 sausages_material.shape.ingot=%s Ingot
 sausages_material.shape.block=%s Block
@@ -11,7 +17,7 @@ sausages_material.shape.stick=%s Stick
 sausages_material.shape.nugget=%s Nugget
 sausages_material.shape.wire=%s Wire
 sausages_material.shape.ore=%s Ore
-
+# -------------------
 sausages_material.metal.iron=Iron
 sausages_material.metal.copper=Copper
 sausages_material.metal.tin=Tin
@@ -24,6 +30,7 @@ sausages_material.metal.gold=Gold
 sausages_material.metal.silver=Silver
 sausages_material.metal.platinum=Platinum
 sausages_material.metal.iridium=Iridium
+
 sausages_material.alloy.steel=Steel
 sausages_material.alloy.hardened=Tungsten Steel
 sausages_material.alloy.bronze=Bronze

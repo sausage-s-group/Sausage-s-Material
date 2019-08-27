@@ -3,6 +3,7 @@ package sausages_material.material;
 import net.minecraft.util.IStringSerializable;
 import sausage_core.api.util.client.Colors;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 
@@ -41,5 +42,9 @@ public enum AlloyMaterials implements IMetalAlloy, IStringSerializable {
 	@Override
 	public String getName() {
 		return name();
+	}
+
+	public static String[] names(){
+		return Arrays.stream(values()).map(IStringSerializable::getName).toArray(String[]::new);
 	}
 }

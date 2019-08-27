@@ -1,16 +1,23 @@
 package sausages_material;
 
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemMultiTexture;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -22,6 +29,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.Logger;
+import sausage_core.api.annotation.AutoCall;
 import sausage_core.api.registry.AutoSyncConfig;
 import sausage_core.api.util.client.IItemCM;
 import sausage_core.api.util.client.IItemML;
@@ -30,14 +38,19 @@ import sausage_core.api.util.registry.IBRegistryManager;
 import sausages_material.block.BlockAlloy;
 import sausages_material.block.BlockMetal;
 import sausages_material.block.OreMetal;
+import sausages_material.event.worldgen.WorldGenEventBus;
+import sausages_material.event.worldgen.ore.OreGenerator;
 import sausages_material.item.ItemMaterial;
 import sausages_material.material.AlloyMaterials;
 import sausages_material.material.IMaterial;
 import sausages_material.material.MetalMaterials;
 import sausages_material.material.MetalShapes;
+import scala.tools.nsc.Global;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
+
+import static sausage_core.api.util.common.SausageUtils.nonnull;
 
 /**
  * @author Yaossg
@@ -69,6 +82,8 @@ public enum SausagesMaterial {
 		}
 	});
 
+    @AutoCall(when = AutoCall.When.INIT)
+	static final Set<Runnable> initCall = Sets.newHashSet(() -> MinecraftForge.ORE_GEN_BUS.register(OreGenerator.getGenerator()), WorldGenEventBus::new);
 	@SuppressWarnings("SameReturnValue")
 	@Mod.InstanceFactory
 	public static SausagesMaterial getInstance() {
@@ -111,16 +126,24 @@ public enum SausagesMaterial {
 			manager.addItemCM(item, colorer);
 		}
 
+		IItemML ml = $-> ModelLoader.setCustomStateMapper(Block.getBlockFromItem($), block->{
+            Map<IBlockState, ModelResourceLocation> model = Maps.newHashMap();
+            ModelResourceLocation modelLocation = new ModelResourceLocation(new ResourceLocation("sausages_material",nonnull(block.getRegistryName()).getPath()),"default");
+		    for(IBlockState state:block.getBlockState().getValidStates()){
+		        model.put(state,modelLocation);
+            }
+		    return model;
+        });
 		BlockAlloy block = new BlockAlloy();
-		manager.addBlock("block_alloy", block, IItemML.mappingBy(Arrays.stream(AlloyMaterials.values()).map(IStringSerializable::getName).toArray(String[]::new)));
+		manager.addBlock("block_alloy", block, ml);
 		manager.addBlockCM(block, this::colorMultiplier);
 
 		BlockMetal block2 = new BlockMetal();
-		manager.addBlock("block_metal", block2, IItemML.mappingBy(Arrays.stream(MetalMaterials.values()).map(IStringSerializable::getName).toArray(String[]::new)));
+		manager.addBlock("block_metal", block2, ml);
 		manager.addBlockCM(block2, this::colorMultiplier);
 
 		OreMetal block3 = new OreMetal();
-		manager.addBlock("ore_metal", block3, IItemML.mappingBy(Arrays.stream(MetalMaterials.values()).map(IStringSerializable::getName).toArray(String[]::new)));
+		manager.addBlock("ore_metal", block3, ml);
 		manager.addBlockCM(block3, this::colorMultiplier);
 	}
 
@@ -138,8 +161,6 @@ public enum SausagesMaterial {
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		ForgeRegistries.BLOCKS.getValue(new ResourceLocation(MODID, "ore_metal"));
-
 	}
 
 	@EventHandler

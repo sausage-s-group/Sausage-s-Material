@@ -4,9 +4,9 @@ buildscript {
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
         maven { url "http://repo.baichuan-android.taobao.com/content/groups/BaichuanRepositories/" }
         maven { url "https://files.minecraftforge.net/maven"}
-        mavenCentral()
         jcenter()
         google()
+        mavenCentral()
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
@@ -90,5 +90,4 @@ artifacts {
     archives apiJar
     archives modJar
     archives devJar
-    archives srcJar
 }

@@ -4,6 +4,8 @@ import net.minecraft.util.IStringSerializable;
 import sausage_core.api.util.client.Colors;
 import sausages_material.event.worldgen.ore.GeneratePredication;
 
+import java.util.Arrays;
+
 public enum MetalMaterials implements IMaterial, IStringSerializable {
 	// colors here now are placeholders
 	//elements
@@ -29,7 +31,11 @@ public enum MetalMaterials implements IMaterial, IStringSerializable {
 		this.color = color;
 	}
 
-	@Override
+	public static String[] names() {
+		return Arrays.stream(values()).map(IStringSerializable::getName).toArray(String[]::new);
+	}
+
+    @Override
 	public int color() {
 		return color;
 	}

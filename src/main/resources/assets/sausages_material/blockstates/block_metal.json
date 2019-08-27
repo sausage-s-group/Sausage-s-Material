@@ -7,7 +7,7 @@
     }
   },
   "variants": {
-    "metal": {
+    "material": {
       "iron": {},
       "copper": {},
       "tin": {},
@@ -20,6 +20,7 @@
       "silver": {},
       "platinum": {},
       "iridium": {}
-    }
+    },
+    "inventory": [{}]
   }
 }

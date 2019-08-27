@@ -9,12 +9,15 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 import java.util.Random;
 
 @SuppressWarnings({"unused", "StatementWithEmptyBody"})
-public class OreGeneratorDefault {
-    public static void onOreGenerate(OreGenEvent.GenerateMinable event) {
+public class OreGeneratorDefault implements OreGenerator{
+    @Override
+    public void onGenerateMinable(OreGenEvent.GenerateMinable event) {
         World worldIn = event.getWorld();
         WorldGenerator generator = event.getGenerator();
         BlockPos position = event.getPos();
         Random rand = event.getRand();
-        if (TerrainGen.generateOre(worldIn, rand, generator, position, OreGenEvent.GenerateMinable.EventType.CUSTOM)) ;
+        if (TerrainGen.generateOre(worldIn, rand, generator, position, OreGenEvent.GenerateMinable.EventType.CUSTOM)){
+
+        }
     }
 }

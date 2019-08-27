@@ -7,13 +7,11 @@
     }
   },
   "variants": {
-    "bronze": {},
-    "constantan": {},
-    "invar": {},
-    "electrum": {},
-    "stainless": {},
-    "platiridinum": {},
-    "steel": {},
-    "hardened": {}
+    "default": {},
+    "inventory": [
+      {
+        "model": ""
+      }
+    ]
   }
 }

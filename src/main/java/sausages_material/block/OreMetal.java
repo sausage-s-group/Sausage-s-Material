@@ -20,7 +20,7 @@ import sausages_material.material.MetalMaterials;
 @SuppressWarnings("deprecation")
 public class OreMetal extends BlockOre {
 
-    public static final PropertyEnum<MetalMaterials> MATERIAL = PropertyEnum.create("metal", MetalMaterials.class);
+    public static final PropertyEnum<MetalMaterials> MATERIAL = PropertyEnum.create("material", MetalMaterials.class);
 
     public OreMetal() {
         super(MapColor.IRON);
