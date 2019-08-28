@@ -42,7 +42,7 @@ public class ItemMaterial extends Item {
     @Override
     public String getItemStackDisplayName(ItemStack s){
         return I18n.format("sausages_material.shape." + nonnull(getRegistryName()).getPath(),
-                I18n.format("sausages_material." + (s.getItemDamage() >= 14 ? "alloy" : "metal") + IMaterial.getMaterial(s.getItemDamage()).name())
+                I18n.format("sausages_material." + (s.getItemDamage() >= 14 ? "alloy" : "metal") + "." + IMaterial.getMaterial(s.getItemDamage()).name())
         );
     }
 

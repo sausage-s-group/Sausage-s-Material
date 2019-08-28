@@ -55,11 +55,14 @@ import static sausage_core.api.util.common.SausageUtils.nonnull;
 /**
  * @author Yaossg
  */
-@Mod(modid = SausagesMaterial.MODID,
+@Mod(
+		modid = SausagesMaterial.MODID,
 		name = SausagesMaterial.NAME,
 		version = SausagesMaterial.VERSION,
 		acceptedMinecraftVersions = "1.12.2",
-		dependencies = "required-after:sausage_core@[1.6,)")
+		dependencies = "required-after:sausage_core@[1.6,)",
+		guiFactory = "sausages_material.gui.GuiFactory"
+)
 @Mod.EventBusSubscriber
 @MethodsReturnNonnullByDefault
 @SuppressWarnings("unused")
@@ -130,7 +133,7 @@ public enum SausagesMaterial {
             Map<IBlockState, ModelResourceLocation> model = Maps.newHashMap();
             ModelResourceLocation modelLocation = new ModelResourceLocation(new ResourceLocation("sausages_material",nonnull(block.getRegistryName()).getPath()),"default");
 		    for(IBlockState state:block.getBlockState().getValidStates()){
-		        model.put(state,modelLocation);
+		    	model.put(state,modelLocation);
             }
 		    return model;
         });
@@ -156,6 +159,7 @@ public enum SausagesMaterial {
 		} else if (block instanceof OreMetal) {
 			return state.getValue(OreMetal.MATERIAL).color();
 		}
+		new Exception(block.toString()).printStackTrace();
 		return 0;
 	}
 
