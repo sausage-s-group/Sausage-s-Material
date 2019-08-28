@@ -7,6 +7,19 @@
         "overlay": "sausages_material:blocks/ore_overlay"
       }
     },
-    "inventory": [{}]
+    "inventory": {
+      "model": "sausages_material:overlay_block",
+      "textures": {
+        "overlay": "sausages_material:blocks/ore_overlay"
+      },
+      "transform": "forge:default-item",
+      "display": {
+        "thirdperson": {
+          "rotation": [ 10, -45, 170 ],
+          "translation": [ 0, 1.5, -2.75 ],
+          "scale": [ 0.375, 0.375, 0.375 ]
+        }
+      }
+    }
   }
 }

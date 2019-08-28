@@ -7,6 +7,19 @@
         "all": "sausages_material:blocks/metal_block"
       }
     },
-    "inventory": [{}]
+    "inventory": {
+      "model": "minecraft:cube_all",
+      "textures": {
+        "all": "sausages_material:blocks/metal_block"
+      },
+      "transform": "forge:default-item",
+      "display": {
+        "thirdperson": {
+          "rotation": [ 10, -45, 170 ],
+          "translation": [ 0, 1.5, -2.75 ],
+          "scale": [ 0.375, 0.375, 0.375 ]
+        }
+      }
+    }
   }
 }
