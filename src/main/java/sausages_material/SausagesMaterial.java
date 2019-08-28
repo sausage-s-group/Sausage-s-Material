@@ -88,7 +88,6 @@ public enum SausagesMaterial {
 
     @AutoCall(when = AutoCall.When.INIT)
 	static final Set<Runnable> initCall = Sets.newHashSet(
-			() -> MinecraftForge.ORE_GEN_BUS.register(OreGenerator.getGenerator()),
 			WorldGenEventBus::new,
 			()->FMLInterModComms.sendMessage("sausages_material","nothing","SurpriseMotherfucker!")
 	);

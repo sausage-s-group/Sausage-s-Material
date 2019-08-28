@@ -9,4 +9,5 @@ public class OreGeneratorOverride extends OreGeneratorDefault implements OreGene
     public static OreGenerator override(Map<String, String> oreGenConfiguration) {
         return new OreGeneratorOverride(oreGenConfiguration);
     }
+
 }

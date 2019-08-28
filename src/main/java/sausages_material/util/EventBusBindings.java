@@ -2,6 +2,7 @@ package sausages_material.util;
 
 import com.google.common.eventbus.Subscribe;
 import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Optional;
@@ -41,6 +42,7 @@ public interface EventBusBindings {
 
             @SubscribeEvent
             public void on(Event event){
+                event.setPhase(EventPriority.HIGH);
                 if(predicate.test(event)){
                     bus.post(event);
                 }
@@ -49,6 +51,7 @@ public interface EventBusBindings {
             @Subscribe
             public void on(Object event){
                 if(event instanceof Event&&predicate.test((Event) event)){
+                    ((Event) event).setPhase(EventPriority.HIGH);
                     bus.post((Event) event);
                 }
             }

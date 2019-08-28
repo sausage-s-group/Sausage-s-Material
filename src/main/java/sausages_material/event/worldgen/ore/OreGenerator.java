@@ -71,12 +71,12 @@ public interface OreGenerator {
         return Container.StaticInitializer.GEN.get();
     }
 
-    @SubscribeEvent
+
     default void pre(OreGenEvent.Pre event){}
 
-    @SubscribeEvent
+
     default void onGenerateMinable(OreGenEvent.GenerateMinable event){}
 
-    @SubscribeEvent
+
     default void post(OreGenEvent.Post event){}
 }
