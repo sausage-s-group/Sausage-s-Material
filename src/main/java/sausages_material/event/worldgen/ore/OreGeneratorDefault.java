@@ -5,10 +5,12 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.event.terraingen.OreGenEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
+import sausage_core.api.annotation.LoadClass;
 
 import java.util.Random;
 
 @SuppressWarnings({"unused", "StatementWithEmptyBody"})
+@LoadClass(when = LoadClass.When.INIT)
 public class OreGeneratorDefault implements OreGenerator{
     @Override
     public void onGenerateMinable(OreGenEvent.GenerateMinable event) {

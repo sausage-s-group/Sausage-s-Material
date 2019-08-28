@@ -16,20 +16,59 @@
 
 package sausages_material.event.worldgen.ore;
 
+import com.google.common.collect.Sets;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import net.minecraftforge.event.terraingen.OreGenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import sausage_core.api.annotation.AutoCall;
+import sausage_core.api.annotation.LoadClass;
+import sausages_material.api_support.APISupport;
+import sausages_material.config.ConfigurationCustomization;
+import sausages_material.config.ConfigurationGeneral;
+
+import java.util.Collections;
+import java.util.Set;
+import java.util.function.Supplier;
 
 /**
  * *GENERATORS DOESN'T RUN UNDER SINGLETON MODE!*
  * An listener interface of {@link OreGenEvent}
  */
+@LoadClass(when = LoadClass.When.PRE_INIT)
 public interface OreGenerator {
+    @AutoCall(when = AutoCall.When.PRE_INIT)
+    Set<Runnable> tasks = Sets.newHashSet(Container.StaticInitializer::new);
+    final class Container{
+        @LoadClass(when = LoadClass.When.PRE_INIT)
+        private static final class StaticInitializer{
+            public static final Supplier<OreGenerator> GEN;
+
+            static {
+                GEN = new Supplier<OreGenerator>() {
+                    private OreGenerator singleton;
+
+                    @Override
+                    public OreGenerator get() {
+                        if(!singletonOreGen){
+                            return useOverridableOreGen?OreGeneratorOverride.override(APISupport.getOreGenConfiguration()):new OreGeneratorDefault();
+                        } else if(singleton==null) {
+                            singleton = useOverridableOreGen?OreGeneratorOverride.override(APISupport.getOreGenConfiguration()):new OreGeneratorDefault();
+                        }
+                        return singleton;
+                    }
+                };
+            }
+            private static final boolean useOverridableOreGen = ConfigurationCustomization.useOverridableOreGen();
+            private static final boolean singletonOreGen = ConfigurationGeneral.isSingletonOreGen();
+        }
+    }
+
     /**
-     * Get an {@link OreGenerator} which has been configured by mod automatically.
+     * Get an {@link OreGenerator}.
      * @return An {@link OreGenerator}
      */
     static OreGenerator getGenerator(){
-        return new OreGeneratorDefault();
+        return Container.StaticInitializer.GEN.get();
     }
 
     @SubscribeEvent

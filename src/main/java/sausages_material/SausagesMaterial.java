@@ -5,15 +5,12 @@ import com.google.common.collect.Sets;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemMultiTexture;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -26,13 +23,14 @@ import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.Logger;
 import sausage_core.api.annotation.AutoCall;
 import sausage_core.api.registry.AutoSyncConfig;
+import sausage_core.api.util.client.IBlockCM;
 import sausage_core.api.util.client.IItemCM;
 import sausage_core.api.util.client.IItemML;
+import sausage_core.api.util.common.SausageUtils;
 import sausage_core.api.util.oredict.OreDicts;
 import sausage_core.api.util.registry.IBRegistryManager;
 import sausages_material.block.BlockAlloy;
@@ -40,17 +38,20 @@ import sausages_material.block.BlockMetal;
 import sausages_material.block.OreMetal;
 import sausages_material.event.worldgen.WorldGenEventBus;
 import sausages_material.event.worldgen.ore.OreGenerator;
+import sausages_material.item.ItemMTexture;
 import sausages_material.item.ItemMaterial;
 import sausages_material.material.AlloyMaterials;
 import sausages_material.material.IMaterial;
 import sausages_material.material.MetalMaterials;
 import sausages_material.material.MetalShapes;
-import scala.tools.nsc.Global;
 
-import java.util.*;
-import java.util.function.Function;
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static sausage_core.api.util.common.SausageUtils.nonnull;
+import static sausage_core.api.util.common.SausageUtils.rawtype;
 
 /**
  * @author Yaossg
@@ -86,7 +87,11 @@ public enum SausagesMaterial {
 	});
 
     @AutoCall(when = AutoCall.When.INIT)
-	static final Set<Runnable> initCall = Sets.newHashSet(() -> MinecraftForge.ORE_GEN_BUS.register(OreGenerator.getGenerator()), WorldGenEventBus::new);
+	static final Set<Runnable> initCall = Sets.newHashSet(
+			() -> MinecraftForge.ORE_GEN_BUS.register(OreGenerator.getGenerator()),
+			WorldGenEventBus::new,
+			()->FMLInterModComms.sendMessage("sausages_material","nothing","SurpriseMotherfucker!")
+	);
 	@SuppressWarnings("SameReturnValue")
 	@Mod.InstanceFactory
 	public static SausagesMaterial getInstance() {
@@ -125,46 +130,45 @@ public enum SausagesMaterial {
 		for(MetalShapes metalShape:MetalShapes.values()){
 			if(metalShape==MetalShapes.block||metalShape==MetalShapes.ore)continue;
 			ItemMaterial item = new ItemMaterial(metalShape);
-			manager.addItem(metalShape.location().getPath(), item);
+			manager.addItem(metalShape.location().getPath(), item, $->{
+				for(int meta = 0;meta<MetalMaterials.values().length+AlloyMaterials.values().length;meta++){
+					IItemML.loadVariantModel(item,meta,"inventory");
+				}
+			});
 			manager.addItemCM(item, colorer);
 		}
 
-		IItemML ml = $-> ModelLoader.setCustomStateMapper(Block.getBlockFromItem($), block->{
-            Map<IBlockState, ModelResourceLocation> model = Maps.newHashMap();
-            ModelResourceLocation modelLocation = new ModelResourceLocation(new ResourceLocation("sausages_material",nonnull(block.getRegistryName()).getPath()),"default");
-		    for(IBlockState state:block.getBlockState().getValidStates()){
-		    	model.put(state,modelLocation);
-            }
-		    return model;
-        });
+		IItemML ml = $ -> {
+			ModelLoader.setCustomStateMapper(Block.getBlockFromItem($), block->{
+				Map<IBlockState, ModelResourceLocation> model = Maps.newHashMap();
+				ModelResourceLocation modelLocation = new ModelResourceLocation(nonnull($.getRegistryName()),"default");
+				for(IBlockState state:block.getBlockState().getValidStates()){
+					model.put(state,modelLocation);
+				}
+				return model;
+			});
+			if($ instanceof ItemMultiTexture) {
+				for (int i = 0; i < SausageUtils.<ItemMultiTexture>rawtype($).getBlock().getBlockState().getValidStates().size(); i++) {
+					IItemML.loadVariantModel($,i,"inventory");
+				}
+			}
+		};
 		BlockAlloy block = new BlockAlloy();
-		manager.addBlock("block_alloy", block, ml);
-		manager.addBlockCM(block, this::colorMultiplier);
+		manager.addBlock("block_alloy", block, $ -> new ItemMTexture($,$,AlloyMaterials.names()), ml);
+		manager.addBlockCM(block, IBlockCM.mappingBy((state, worldIn, pos) -> state.getValue(BlockAlloy.MATERIAL).color()));
 
 		BlockMetal block2 = new BlockMetal();
-		manager.addBlock("block_metal", block2, ml);
-		manager.addBlockCM(block2, this::colorMultiplier);
+		manager.addBlock("block_metal", block2, $ -> new ItemMTexture($,$,MetalMaterials.names()), ml);
+		manager.addBlockCM(block2, IBlockCM.mappingBy((state, worldIn, pos) -> state.getValue(BlockMetal.MATERIAL).color()));
 
 		OreMetal block3 = new OreMetal();
-		manager.addBlock("ore_metal", block3, ml);
-		manager.addBlockCM(block3, this::colorMultiplier);
-	}
-
-	private int colorMultiplier(IBlockState state, IBlockAccess world, BlockPos position, int tintIndex) {
-		Block block = state.getBlock();
-		if (block instanceof BlockAlloy) {
-			return state.getValue(BlockAlloy.MATERIAL).color();
-		} else if (block instanceof BlockMetal) {
-			return state.getValue(BlockMetal.MATERIAL).color();
-		} else if (block instanceof OreMetal) {
-			return state.getValue(OreMetal.MATERIAL).color();
-		}
-		new Exception(block.toString()).printStackTrace();
-		return 0;
+		manager.addBlock("ore_metal", block3, $ -> new ItemMTexture($,$,MetalMaterials.names()), ml);
+		manager.addBlockCM(block3, IBlockCM.mappingBy((state, worldIn, pos) -> state.getValue(OreMetal.MATERIAL).color()));
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
+		FMLInterModComms.sendMessage("sausages_core","ASimpleKey","SurpriseMotherfucker!");
 	}
 
 	@EventHandler

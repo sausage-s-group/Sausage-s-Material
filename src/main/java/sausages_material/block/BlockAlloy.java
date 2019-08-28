@@ -33,13 +33,13 @@ public class BlockAlloy extends Block {
     @Override
     public void getSubBlocks(CreativeTabs tabs, NonNullList<ItemStack> list) {
         for (int i = 0; i < AlloyMaterials.values().length; i++) {
-            list.add(new ItemStack(this, 1, i + MetalMaterials.values().length));
+            list.add(new ItemStack(this, 1, i));
         }
     }
 
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-        state.withProperty(MATERIAL, IMaterial.getMaterial(stack.getItemDamage()));
+        state.withProperty(MATERIAL, IMaterial.getMaterial(stack.getItemDamage()+MetalMaterials.values().length));
     }
 
     @Override

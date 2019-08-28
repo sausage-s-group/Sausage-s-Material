@@ -1,4 +1,5 @@
-﻿itemGroup.sausages_material=Sausage's Material
+﻿
+itemGroup.sausages_material=Sausage's Material
 # -------------------
 cfg.sausages_material.general=Sausage's Material Generic Config
 cfg.sausages_material.general.singleton_ore_gen=Singleton Ore Generator

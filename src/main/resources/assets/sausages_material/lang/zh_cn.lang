@@ -1,8 +1,9 @@
-﻿cfg.sausages_material.customization=Sausage's Material 自定义
+﻿
+cfg.sausages_material.customization=Sausage's Material 自定义
 cfg.sausages_material.customization.use_overridable_ore_gen=使用可重写矿物生成器
 # ------- config --------
 cfg.sausages_material.general=Sausage's Material 配置
-cfg.sausages_material.general.singleton_ore_gen=单例矿物生成器
+cfg.sausages_material.general.singleton_ore_gen=使用单例矿物生成器
 # -------  game  --------
 itemGroup.sausages_material=Sausage's Material
 sausages_material.alloy.bronze=青铜

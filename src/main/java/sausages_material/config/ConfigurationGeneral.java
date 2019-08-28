@@ -8,9 +8,9 @@ import sausages_material.SausagesMaterial;
 public class ConfigurationGeneral {
     @Config.Name("world_generator_singleton")
     @Config.LangKey("cfg.sausages_material.general.singleton_ore_gen")
-    @Config.Comment("If world generators(sausages_material.event.worldgen.*) run in singleton mode.")
+    @Config.Comment("If world generators(sausages_material.event.worldgen.*) run in singleton mode.(Default to false)")
     @Config.RequiresMcRestart
-    private static boolean singletonOreGen = false;
+    public static boolean singletonOreGen = false;
 
     public static boolean isSingletonOreGen() {
         return singletonOreGen;

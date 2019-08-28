@@ -1,10 +1,13 @@
 package sausages_material.material;
 
+import sausage_core.api.annotation.LoadClass;
+
 import java.util.List;
 
 /**
  * The steel which includes iron and carbon does not belongs to this!
  * */
+@LoadClass(when = LoadClass.When.PRE_INIT)
 public interface IMetalAlloy extends IMaterial {
 	@SuppressWarnings("WeakerAccess")
 	class WeightedMetal {

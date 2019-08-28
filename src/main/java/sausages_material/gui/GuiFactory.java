@@ -57,7 +57,7 @@ public class GuiFactory implements IModGuiFactory {
      */
     @Override
     public GuiScreen createConfigGui(GuiScreen parentScreen) {
-        return new GuiConfig(parentScreen, Lists.<IConfigElement>newArrayList(ConfigElement.from(ConfigurationGeneral.class),ConfigElement.from(ConfigurationCustomization.class)), SausagesMaterial.MODID, "cfg.sausages_material",false,false,"","");
+        return new GuiConfig(parentScreen, Lists.<IConfigElement>newArrayList(ConfigElement.from(ConfigurationGeneral.class),ConfigElement.from(ConfigurationCustomization.class)), SausagesMaterial.MODID, "cfg.sausages_material",false,false,"Sausage's Material Config","Inverse of Control!");
     }
 
     /**
