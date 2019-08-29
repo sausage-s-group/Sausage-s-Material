@@ -11,9 +11,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemMultiTexture;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -30,28 +27,25 @@ import sausage_core.api.registry.AutoSyncConfig;
 import sausage_core.api.util.client.IBlockCM;
 import sausage_core.api.util.client.IItemCM;
 import sausage_core.api.util.client.IItemML;
-import sausage_core.api.util.common.SausageUtils;
 import sausage_core.api.util.oredict.OreDicts;
 import sausage_core.api.util.registry.IBRegistryManager;
 import sausages_material.block.BlockAlloy;
 import sausages_material.block.BlockMetal;
 import sausages_material.block.OreMetal;
 import sausages_material.event.worldgen.WorldGenEventBus;
-import sausages_material.event.worldgen.ore.OreGenerator;
 import sausages_material.item.ItemMTexture;
 import sausages_material.item.ItemMaterial;
 import sausages_material.material.AlloyMaterials;
 import sausages_material.material.IMaterial;
 import sausages_material.material.MetalMaterials;
 import sausages_material.material.MetalShapes;
+import sausages_material.util.SMUtils;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import static sausage_core.api.util.common.SausageUtils.nonnull;
-import static sausage_core.api.util.common.SausageUtils.rawtype;
 
 /**
  * @author Yaossg
@@ -147,7 +141,7 @@ public enum SausagesMaterial {
 				return model;
 			});
 			if($ instanceof ItemMultiTexture) {
-				for (int i = 0; i < SausageUtils.<ItemMultiTexture>rawtype($).getBlock().getBlockState().getValidStates().size(); i++) {
+				for (int i = 0; i < SMUtils.checkAndCast(ItemMultiTexture.class, $).getBlock().getBlockState().getValidStates().size(); i++) {
 					IItemML.loadVariantModel($,i,"inventory");
 				}
 			}
@@ -162,12 +156,12 @@ public enum SausagesMaterial {
 
 		OreMetal block3 = new OreMetal();
 		manager.addBlock("ore_metal", block3, $ -> new ItemMTexture($,$,MetalMaterials.names()), ml);
-		manager.addBlockCM(block3, IBlockCM.mappingBy((state, worldIn, pos) -> state.getValue(OreMetal.MATERIAL).color()));
+		manager.addBlockCM(block3, (state, worldIn, pos, tintIndex) -> tintIndex == 1 ? state.getValue(OreMetal.MATERIAL).color() : -1);
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		FMLInterModComms.sendMessage("sausages_core","ASimpleKey","SurpriseMotherfucker!");
+
 	}
 
 	@EventHandler
