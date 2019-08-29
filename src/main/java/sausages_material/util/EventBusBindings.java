@@ -40,9 +40,8 @@ public interface EventBusBindings {
                 this.predicate = Optional.ofNullable(predicate).orElse($->true);
             }
 
-            @SubscribeEvent
+            @SubscribeEvent(priority = EventPriority.HIGHEST)
             public void on(Event event){
-                event.setPhase(EventPriority.HIGH);
                 if(predicate.test(event)){
                     bus.post(event);
                 }
@@ -65,7 +64,7 @@ public interface EventBusBindings {
                 this.predicate = Optional.ofNullable(predicate).orElse($->true);
             }
 
-            @SubscribeEvent
+            @SubscribeEvent(priority = EventPriority.HIGHEST)
             public void on(Event event){
                 if(predicate.test(event)){
                     bus.post(event);

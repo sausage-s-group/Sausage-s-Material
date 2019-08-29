@@ -23,6 +23,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.Logger;
 import sausage_core.api.annotation.AutoCall;
+import sausage_core.api.annotation.InjectLogger;
 import sausage_core.api.registry.AutoSyncConfig;
 import sausage_core.api.util.client.IBlockCM;
 import sausage_core.api.util.client.IItemCM;
@@ -67,6 +68,7 @@ public enum SausagesMaterial {
 	public static final String MODID = "sausages_material";
 	public static final String NAME = "Sausage's Material";
 	public static final String VERSION = "@version@";
+	@InjectLogger
 	public static Logger logger;
     private static final IBRegistryManager manager = new IBRegistryManager(MODID, new CreativeTabs(MODID) {
 		@Override
@@ -117,7 +119,6 @@ public enum SausagesMaterial {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		IItemCM colorer = IItemCM.mappingBy(stack -> IMaterial.getMaterial(stack.getItemDamage()).color());
-		logger = event.getModLog();
 		MinecraftForge.EVENT_BUS.register(AutoSyncConfig.class);
 		AutoSyncConfig.AUTO_SYNC_CONFIG.register(MODID);
 		for(MetalShapes metalShape:MetalShapes.values()){
@@ -148,11 +149,11 @@ public enum SausagesMaterial {
 		};
 		BlockAlloy block = new BlockAlloy();
 		manager.addBlock("block_alloy", block, $ -> new ItemMTexture($,$,AlloyMaterials.names()), ml);
-		manager.addBlockCM(block, IBlockCM.mappingBy((state, worldIn, pos) -> state.getValue(BlockAlloy.MATERIAL).color()));
+		manager.addBlockCM(block, (state, worldIn, pos, tintIndex) -> state.getValue(BlockAlloy.MATERIAL).color());
 
 		BlockMetal block2 = new BlockMetal();
 		manager.addBlock("block_metal", block2, $ -> new ItemMTexture($,$,MetalMaterials.names()), ml);
-		manager.addBlockCM(block2, IBlockCM.mappingBy((state, worldIn, pos) -> state.getValue(BlockMetal.MATERIAL).color()));
+		manager.addBlockCM(block2, (state, worldIn, pos, tintIndex) -> state.getValue(BlockMetal.MATERIAL).color());
 
 		OreMetal block3 = new OreMetal();
 		manager.addBlock("ore_metal", block3, $ -> new ItemMTexture($,$,MetalMaterials.names()), ml);
